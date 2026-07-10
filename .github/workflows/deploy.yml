@@ -53,7 +53,7 @@ jobs:
           set sftp:auto-confirm yes
           set net:max-retries 2
           set net:timeout 30
-          mirror -R --delete --parallel=4 --verbose build/ /www
+          mirror -R --delete --parallel=4 --verbose build/ www
           quit
           LFTP_EOF
           echo "Publicatie voltooid."
