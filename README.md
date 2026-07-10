@@ -6,7 +6,15 @@ Statische React-app (Create React App + Tailwind). **Geen backend**: alle
 content staat in [`src/content.json`](src/content.json) en alle afbeeldingen
 in [`public/images/`](public/images/).
 
-## Content aanpassen
+## Content aanpassen (voor Stijn: het dashboard)
+
+Ga naar **https://www.stijnvangorkum.nl/beheer/** en log in met een
+GitHub-token. Daar kun je projecten toevoegen, teksten aanpassen en
+afbeeldingen uploaden. Na "Opslaan" bouwt GitHub Actions de site en staat de
+wijziging binnen een paar minuten live — er hoeft niets handmatig geüpload
+te worden.
+
+## Content aanpassen (handmatig)
 
 Alle teksten, projecten, afbeeldingen en video's staan in `src/content.json`.
 
@@ -20,16 +28,30 @@ Alle teksten, projecten, afbeeldingen en video's staan in `src/content.json`.
 Nieuwe afbeelding? Zet het bestand in `public/images/` en verwijs ernaar als
 `/images/bestandsnaam.png`.
 
-## Bouwen en publiceren
+## Publiceren
+
+Publiceren gaat automatisch: elke push naar `main` (ook commits vanuit het
+beheerdashboard) triggert [.github/workflows/deploy.yml](.github/workflows/deploy.yml),
+die de site bouwt en via SFTP naar `/www` op de TransIP-hosting zet.
+
+Daarvoor moeten deze GitHub-secrets bestaan (repo → Settings → Secrets and
+variables → Actions):
+
+| Secret | Waarde |
+|---|---|
+| `SFTP_HOST` | SFTP-hostnaam uit het TransIP-controlepaneel |
+| `SFTP_USER` | SFTP-gebruikersnaam |
+| `SFTP_PASS` | SFTP-wachtwoord |
+| `SFTP_PORT` | (optioneel) poort, standaard 22 |
+
+Handmatig bouwen kan nog steeds:
 
 ```
 npm install        # eenmalig / na wijzigingen in package.json
 npm run build
 ```
 
-Upload daarna de **inhoud** van de map `build/` naar de webhosting van
-stijnvangorkum.nl (zoals altijd). Het bestand `.htaccess` zit in de build en
-moet mee.
+Upload dan de **inhoud** van `build/` (inclusief `.htaccess`) naar `/www`.
 
 ## Lokaal bekijken
 

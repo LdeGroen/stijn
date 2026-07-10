@@ -1,4 +1,4 @@
 User-agent: *
-Disallow:
+Disallow: /beheer/
 
 Sitemap: https://www.stijnvangorkum.nl/sitemap.xml

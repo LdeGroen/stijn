@@ -1,0 +1,59 @@
+name: Bouw en publiceer naar stijnvangorkum.nl
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # handmatig starten kan ook, via de Actions-tab
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+jobs:
+  build-en-publiceer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Dependencies installeren
+        run: npm ci
+
+      - name: Site bouwen
+        run: npm run build
+
+      - name: Controleer SFTP-secrets
+        id: secrets
+        env:
+          SFTP_HOST: ${{ secrets.SFTP_HOST }}
+        run: |
+          if [ -z "$SFTP_HOST" ]; then
+            echo "aanwezig=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::SFTP-secrets ontbreken (SFTP_HOST/SFTP_USER/SFTP_PASS). De build is gelukt maar er is NIET gepubliceerd. Voeg de secrets toe via Settings > Secrets and variables > Actions."
+          else
+            echo "aanwezig=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publiceer via SFTP naar /www
+        if: steps.secrets.outputs.aanwezig == 'true'
+        env:
+          SFTP_HOST: ${{ secrets.SFTP_HOST }}
+          SFTP_USER: ${{ secrets.SFTP_USER }}
+          SFTP_PASS: ${{ secrets.SFTP_PASS }}
+          SFTP_PORT: ${{ secrets.SFTP_PORT }}
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq lftp
+          PORT="${SFTP_PORT:-22}"
+          lftp -u "$SFTP_USER","$SFTP_PASS" -p "$PORT" "sftp://$SFTP_HOST" <<'LFTP_EOF'
+          set sftp:auto-confirm yes
+          set net:max-retries 2
+          set net:timeout 30
+          mirror -R --delete --parallel=4 --verbose build/ /www
+          quit
+          LFTP_EOF
+          echo "Publicatie voltooid."

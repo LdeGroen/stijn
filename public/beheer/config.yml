@@ -1,0 +1,105 @@
+# Configuratie voor het beheerdashboard (Sveltia CMS)
+# Bewerkt src/content.json in de GitHub-repo; elke wijziging wordt
+# automatisch gebouwd en gepubliceerd door GitHub Actions.
+
+backend:
+  name: github
+  repo: LdeGroen/stijn
+  branch: main
+  commit_messages:
+    update: "Content bijgewerkt via beheerdashboard"
+    uploadMedia: "Afbeelding toegevoegd via beheerdashboard: {{path}}"
+    deleteMedia: "Afbeelding verwijderd via beheerdashboard: {{path}}"
+
+site_url: https://www.stijnvangorkum.nl
+display_url: https://www.stijnvangorkum.nl
+
+media_folder: public/images
+public_folder: /images
+
+collections:
+  - name: inhoud
+    label: Website-inhoud
+    files:
+      - name: projecten
+        label: Projecten
+        file: src/content.json
+        format: json
+        fields:
+          - name: elementen
+            label: Projecten
+            label_singular: Project
+            widget: list
+            summary: "{{fields.Naam}} — positie {{fields.positie}}"
+            fields:
+              - name: $id
+                label: ID (automatisch, niet aanpassen)
+                widget: uuid
+                required: false
+              - name: Naam
+                label: Naam (korte titel op het zwevende object)
+                widget: string
+              - name: positie
+                label: "Positie (1 t/m 5 = op de homepage, 6 of hoger = in het archief)"
+                widget: number
+                value_type: int
+                min: 1
+              - name: Object
+                label: Afbeelding van het zwevende object
+                widget: image
+              - name: Titel
+                label: Volledige titel (in het detailvenster; leeg = Naam wordt gebruikt)
+                widget: string
+                required: false
+              - name: Subtitel
+                label: Subtitel
+                widget: string
+                required: false
+              - name: Tekst1
+                label: "Beschrijving (opmaak: [b]vet[b] en [Button:Knoptekst:https://link])"
+                widget: text
+                required: false
+              - name: Tekst2
+                label: "Viewings (zelfde opmaak mogelijk)"
+                widget: text
+                required: false
+              - name: Credits
+                label: Credits
+                widget: text
+                required: false
+              - name: afbeeldingen
+                label: Afbeeldingen (diavoorstelling in het detailvenster)
+                widget: list
+                required: false
+                field:
+                  name: afbeelding
+                  label: Afbeelding
+                  widget: image
+              - name: videos
+                label: "Video's (YouTube-links worden automatisch ingesloten)"
+                widget: list
+                required: false
+                fields:
+                  - name: url
+                    label: Video-URL (bijv. YouTube-link)
+                    widget: string
+                  - name: title
+                    label: Titel boven de video
+                    widget: string
+                    required: false
+              - name: SubtitelEng
+                label: Subtitel (Engels)
+                widget: string
+                required: false
+              - name: TekstEng1
+                label: Beschrijving (Engels)
+                widget: text
+                required: false
+              - name: TekstEng2
+                label: Viewings (Engels)
+                widget: text
+                required: false
+              - name: CreditsEng
+                label: Credits (Engels)
+                widget: text
+                required: false

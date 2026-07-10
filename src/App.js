@@ -327,10 +327,14 @@ export default function App() {
       e.stopPropagation();
       setIsArchiveOpen(false);
   }
-  
+
+  // Unieke sleutel per project; nieuwe projecten uit het beheerdashboard
+  // hebben niet altijd een $id, dan is de naam de terugvaloptie.
+  const elementKey = (element) => element.$id || element.Naam;
+
   const renderElements = (elementsToRender) => {
       return elementsToRender.map((element) => {
-          const isActive = activeElement && activeElement.$id === element.$id;
+          const isActive = activeElement && elementKey(activeElement) === elementKey(element);
           const style = isActive ? 
             { position: 'fixed', width: '100vw', height: '100vh', top: '50%', left: '50%', transform: 'translate(-50%, -50%) rotate(0deg)', zIndex: 70 } : 
             { 
@@ -345,7 +349,7 @@ export default function App() {
             };
 
           return (
-            <div key={element.$id} className={`group cursor-pointer transition-all duration-1000 ease-in-out ${activeElement && !isActive ? 'opacity-0 scale-0' : 'opacity-100'}`} style={style} onClick={() => handleSelectElement(element)}>
+            <div key={elementKey(element)} className={`group cursor-pointer transition-all duration-1000 ease-in-out ${activeElement && !isActive ? 'opacity-0 scale-0' : 'opacity-100'}`} style={style} onClick={() => handleSelectElement(element)}>
               <img 
                 src={element.Object} 
                 alt={`Miniatuur object voor project ${element.Naam}`} 
@@ -373,7 +377,7 @@ export default function App() {
 
   const renderArchiveElements = (elementsToRender) => {
       return elementsToRender.map((element) => {
-          const isActive = activeElement && activeElement.$id === element.$id;
+          const isActive = activeElement && elementKey(activeElement) === elementKey(element);
           
           const style = isActive ? 
             { position: 'fixed', width: '100vw', height: '100vh', top: '50%', left: '50%', transform: 'translate(-50%, -50%) rotate(0deg)', zIndex: 70 } : 
@@ -386,7 +390,7 @@ export default function App() {
 
           return (
               <div 
-                  key={element.$id} 
+                  key={elementKey(element)} 
                   className={`group cursor-pointer transition-all duration-1000 ease-in-out ${activeElement && !isActive ? 'opacity-0 scale-0' : 'opacity-100'}`} 
                   style={style} 
                   onClick={() => handleSelectElement(element)}
