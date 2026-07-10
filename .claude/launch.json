@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "build-preview",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "-s", "build", "-l", "3999"],
+      "port": 3999
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "elementen": [
+    {
+      "Naam": "EEN HOND DIE HUILT",
+      "Object": "/images/object-een-hond-die-huilt.png",
+      "Tekst1": "Een ballerina zonder haar publiek, een hond opgesloten op zijn balkon en een man die zijn auto niet gestart krijgt. In een leven dat stil is gezet, wordt de geïsoleerde mens geobserveerd in al zijn eenzaamheid en onkunde.",
+      "Tekst2": "[b]official selection[b] Palmspring International ShortFest \n[b]official selection[b] Nederlands Filmfestival\n[b]official selection[b] LAShorts \n[b]official selection[b] RIFFA \n[b]gouden hert winnaar[b] GoShort Arnhem",
+      "Credits": "[b]REGISSEUR EN SCENARIO[b] Stijn van Gorkum [b]PRODUCTIE[b] Kelsey Kriens en Stijn van Gorkum [b]PRODUCTION DESIGNERS[b] Anna Reerds en Maaike Carree [b]DOP[b] Sean Louw [b]VFX[b] Stijn van Gorkum [b]IN SAMENWERKING MET[b] AVROTROS en NPO 3lab",
+      "positie": "1",
+      "Subtitel": "KORTE FILM",
+      "Titel": "Een hond die huilt",
+      "TekstEng1": null,
+      "TekstEng2": null,
+      "CreditsEng": null,
+      "SubtitelEng": null,
+      "$id": "68daefc3003b54bdc5d1",
+      "afbeeldingen": [
+        "/images/imgur-CXTEZ7X.png",
+        "/images/imgur-OOrXoEG.png",
+        "/images/een-hond-die-huilt-2.png",
+        "/images/een-hond-die-huilt-4.png"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=v9GfBfKN9XI",
+          "title": "FILM"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=-RJntdHbEUQ",
+          "title": "MAKING OF"
+        }
+      ]
+    },
+    {
+      "Naam": "ELMER",
+      "Object": "/images/object-elmer.png",
+      "Tekst1": "In een kleurrijk, langwerpig miniatuur huis wonen, rappen, vechten en dansen 3 Elmers en hond Skipper. ELMERS is een multidisciplinair socialmedia project bestaande uit 3 videoclips en een hele hoop sketches.",
+      "Tekst2": null,
+      "Credits": "[b]REGISSEUR[b] Stijn van Gorkum [b]CONCEPT[b] Merel Pauw [b]PRODUCTION DESIGNER[b] Anna Reerds [b]CAST[b] Merel Pauw [b]CAMERA[b] Stijn van Gorkum [b]VFX[b] Stijn van Gorkum [b]PRODUCTIE[b] Lynn Meijer [b]IN SAMENWERKING MET[b] pmp productiehuis",
+      "positie": "2",
+      "Subtitel": "VIDEOCLIPS EN SKETCHES",
+      "Titel": "",
+      "TekstEng1": null,
+      "TekstEng2": null,
+      "CreditsEng": null,
+      "SubtitelEng": null,
+      "$id": "68daf455001f8fa76f0d",
+      "afbeeldingen": [
+        "/images/elmer-3.png",
+        "/images/elmer-5.png"
+      ],
+      "videos": []
+    },
+    {
+      "Naam": "DE WITTE HAND",
+      "Object": "/images/object-de-witte-hand.png",
+      "Tekst1": "De dood staat voor je voordeur, ze wacht en kijkt door je raam. Ze heeft de tijd. De Witte Hand is videoclip gefilmd in een poppenhuis in opdracht van muziektheatergroep BOT.",
+      "Tekst2": null,
+      "Credits": "[b]REGISSEUR[b] Stijn van Gorkum [b]MUZIEK[b] muziektheatergroep [b]BOT CAMERA / VFX / PRODUCTION DESIGN[b] Stijn van Gorkum [b]MET DANK AAN[b] Douwe Dijkstra",
+      "positie": "3",
+      "Subtitel": "VIDEOCLIP",
+      "Titel": "",
+      "TekstEng1": null,
+      "TekstEng2": null,
+      "CreditsEng": null,
+      "SubtitelEng": null,
+      "$id": "68daf4a400127707d1d3",
+      "afbeeldingen": [
+        "/images/de-witte-hand-4.png",
+        "/images/de-witte-hand-2.png"
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=nbU1juaJbAs",
+          "title": ""
+        }
+      ]
+    },
+    {
+      "Naam": "PICNIC",
+      "Object": "/images/object-picnic.png",
+      "Tekst1": "In de holymotion studio heb ik meegebouwd aan sets en props die het decor vormen van verschillende Picnic reclames. Hier een selectie van wat ik door de jaren heen gebouwd heb.",
+      "Tekst2": null,
+      "Credits": "[b]REGISSEUR[b] Mascha Halberstad [b]PRODUCTIE[b] Marleen Slot [b]STUDIO[b] Holy Motion Studio [b]MINIATURE PROPMAKER[b] Stijn van Gorkum",
+      "positie": "4",
+      "Subtitel": "RECLAME",
+      "Titel": "",
+      "TekstEng1": null,
+      "TekstEng2": null,
+      "CreditsEng": null,
+      "SubtitelEng": null,
+      "$id": "68e140bb001249f8f9c6",
+      "afbeeldingen": [],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=bEmJPvrY9mo",
+          "title": ""
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=CBqXQ4-nEzg",
+          "title": ""
+        }
+      ]
+    },
+    {
+      "Naam": "KING",
+      "Object": "/images/object-king.png",
+      "Tekst1": "Sjap (8) is dikke vrienden met zijn vader die trambestuurder is. Maar rond kerst mist hij zijn moeder, die hij alleen van tv kent. Samen met een hond en vrienden uit zijn flat gaat hij naar haar op zoek en ontdekt wat zijn vader voor hem verborgen houdt.\n\nIn de holymotion studio heb ik een jaar lang meegebouwd aan sets en props die het decor vormen van de kinderbioscoopfilm ‘King’. Hier een kleine selectie van wat ik in dit jaar gebouwd heb.",
+      "Tekst2": null,
+      "Credits": "[b]REGISSEUR[b] Mascha Halberstad [b]SCENARIO[b] Mieke de Jong [b]PRODUCENT[b] Marleen Slot [b]MINIATURE PROP EN SET BUILDER[b] Stijn van Gorkum",
+      "positie": "5",
+      "Subtitel": "STOPMOTIONFILM",
+      "Titel": "",
+      "TekstEng1": null,
+      "TekstEng2": null,
+      "CreditsEng": null,
+      "SubtitelEng": null,
+      "$id": "68e140e7001cb7a1d904",
+      "afbeeldingen": [
+        "/images/81d336a2-6db6-41a3-b3ad-f2dfbaea70b8.jpg",
+        "/images/img-5384.jpg",
+        "/images/img-4529.jpg",
+        "/images/img-4991.jpg",
+        "/images/img-4891.jpg"
+      ],
+      "videos": []
+    }
+  ]
+}

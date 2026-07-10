@@ -1,27 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Client, Databases, Query } from "appwrite";
-
-// --- Appwrite Configuration ---
-const APPWRITE_ENDPOINT = 'https://cloud.appwrite.io/v1';
-const APPWRITE_PROJECT_ID = '68d7b5ec002a1e7eb6a8';
-const APPWRITE_DATABASE_ID = '68d7b6480023236e8e9a';
-const ELEMENTS_COLLECTION_ID = 'elementen';
-const AFBEELDINGEN_COLLECTION_ID = 'afbeeldingen';
-const VIDEOS_COLLECTION_ID = 'videos';
-
-// Initialize Appwrite Client
-const client = new Client();
-client
-    .setEndpoint(APPWRITE_ENDPOINT)
-    .setProject(APPWRITE_PROJECT_ID);
-
-const databases = new Databases(client);
+import content from './content.json';
 
 // --- Static Data (Desktop Defaults) ---
 const cloudData = [
-    { id: 'c1', src: 'https://i.imgur.com/3CVYDp0.png', top: '10%', left: '-20vw', right: 'auto', width: '60vw', zIndex: 15 },
-    { id: 'c2', src: 'https://i.imgur.com/ivgLBmC.png', top: '30%', left: 'auto', right: '10vw', width: '80vw', zIndex: 16 },
-    { id: 'c3', src: 'https://i.imgur.com/cksHjfb.png', top: '45%', left: '60vw', right: 'auto', width: '70vw', zIndex: 15 },
+    { id: 'c1', src: '/images/wolk-1.png', top: '10%', left: '-20vw', right: 'auto', width: '60vw', zIndex: 15 },
+    { id: 'c2', src: '/images/wolk-2.png', top: '30%', left: 'auto', right: '10vw', width: '80vw', zIndex: 16 },
+    { id: 'c3', src: '/images/wolk-3.png', top: '45%', left: '60vw', right: 'auto', width: '70vw', zIndex: 15 },
 ];
 
 const basePositions = [
@@ -112,8 +96,13 @@ const updateMetaTags = (title, description, image = null) => {
     setMetaTag('property', 'og:type', 'website');
     setMetaTag('property', 'og:url', window.location.href);
     
-    const defaultImage = "https://i.imgur.com/BzgiMi7.png"; 
-    setMetaTag('property', 'og:image', image || defaultImage);
+    const defaultImage = "/images/stijn-van-gorkum.png";
+    let ogImage = image || defaultImage;
+    // og:image moet een absolute URL zijn
+    if (ogImage.startsWith('/')) {
+        ogImage = window.location.origin + ogImage;
+    }
+    setMetaTag('property', 'og:image', ogImage);
 
     let canonical = document.querySelector('link[rel="canonical"]');
     if (!canonical) {
@@ -127,10 +116,15 @@ const updateMetaTags = (title, description, image = null) => {
 
 // --- Main App Component ---
 export default function App() {
-  const [rawElements, setRawElements] = useState([]);
+  // Content zit in de build (content.json): direct beschikbaar, geen laadstatus nodig
+  const [rawElements] = useState(() =>
+    content.elementen.filter(doc => doc.positie && doc.positie >= 1 && doc.positie <= 5)
+  );
   const [elements, setElements] = useState([]);
-  
-  const [archiveElements, setArchiveElements] = useState([]);
+
+  const [archiveElements] = useState(() =>
+    content.elementen.filter(doc => doc.positie > 5)
+  );
   const [activeElement, setActiveElement] = useState(null);
   
   const [modalImages, setModalImages] = useState([]);
@@ -142,8 +136,7 @@ export default function App() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
   const [isArchiveOpen, setIsArchiveOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  
+
   const [isInstagramScriptLoaded, setIsInstagramScriptLoaded] = useState(false);
 
   // Mobile detection state
@@ -163,41 +156,12 @@ export default function App() {
   // --- Wolken configuratie (Mobiel vs Desktop) ---
   // AANGEPAST: Waarden iets normaler gezet (150vw-180vw is al heel groot!)
   const activeCloudData = isMobile ? [
-      { id: 'cm1', src: 'https://i.imgur.com/3CVYDp0.png', top: '20%', left: '-20vw', right: 'auto', width: '200vw', zIndex: 15, opacity: 1 }, // Mobiel 1
-      { id: 'cm2', src: 'https://i.imgur.com/ivgLBmC.png', top: '40%', left: 'auto', right: '-40vw', width: '180vw', zIndex: 16, opacity: 1 }, // Mobiel 2
-      { id: 'cm3', src: 'https://i.imgur.com/cksHjfb.png', top: '70%', left: '-20vw', right: 'auto', width: '160vw', zIndex: 15, opacity: 1 }, // Mobiel 3
-      { id: 'cm4', src: 'https://i.imgur.com/3CVYDp0.png', top: '80%', left: '-70vw', right: 'auto', width: '150vw', zIndex: 15, opacity: 1 }, // Mobiel 4
+      { id: 'cm1', src: '/images/wolk-1.png', top: '20%', left: '-20vw', right: 'auto', width: '200vw', zIndex: 15, opacity: 1 }, // Mobiel 1
+      { id: 'cm2', src: '/images/wolk-2.png', top: '40%', left: 'auto', right: '-40vw', width: '180vw', zIndex: 16, opacity: 1 }, // Mobiel 2
+      { id: 'cm3', src: '/images/wolk-3.png', top: '70%', left: '-20vw', right: 'auto', width: '160vw', zIndex: 15, opacity: 1 }, // Mobiel 3
+      { id: 'cm4', src: '/images/wolk-1.png', top: '80%', left: '-70vw', right: 'auto', width: '150vw', zIndex: 15, opacity: 1 }, // Mobiel 4
       // Ik heb de dubbele cm3 verwijderd (id's moeten uniek zijn) en een 4e wolk optioneel gemaakt
   ] : cloudData; 
-
-  // Fetch data from Appwrite
-  useEffect(() => {
-    const fetchElements = async () => {
-      setIsLoading(true);
-      try {
-        const response = await databases.listDocuments(
-          APPWRITE_DATABASE_ID,
-          ELEMENTS_COLLECTION_ID
-        );
-
-        // Filter active docs (position 1-5)
-        const activeDocs = response.documents
-          .filter(doc => doc.positie && doc.positie >= 1 && doc.positie <= 5);
-        
-        // Filter archive docs
-        const archived = response.documents
-          .filter(doc => doc.positie > 5);
-          
-        setRawElements(activeDocs);
-        setArchiveElements(archived);
-      } catch (error) {
-        console.error("Failed to fetch elements from Appwrite:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchElements();
-  }, []);
 
   // Bereken posities dynamisch op basis van schermgrootte
   useEffect(() => {
@@ -255,7 +219,7 @@ export default function App() {
         updateMetaTags(`${title} | ${baseTitle}`, desc, activeElement.Object);
 
     } else if (isAboutModalOpen) {
-        updateMetaTags(`Over | ${baseTitle}`, "Biografie en contactinformatie van Stijn van Gorkum, filmregisseur en miniatuurbouwer.", "https://i.imgur.com/BzgiMi7.png");
+        updateMetaTags(`Over | ${baseTitle}`, "Biografie en contactinformatie van Stijn van Gorkum, filmregisseur en miniatuurbouwer.", "/images/stijn-van-gorkum.png");
     } else if (isArchiveOpen) {
         updateMetaTags(`Archief | ${baseTitle}`, "Overzicht van eerdere projecten en miniaturen van Stijn van Gorkum.");
     } else {
@@ -329,63 +293,19 @@ export default function App() {
     }
   }, [activeElement, isModalVisible, isInstagramScriptLoaded]);
   
-  const handleSelectElement = async (element) => {
+  const handleSelectElement = (element) => {
     if (!activeElement) {
       setActiveElement(element);
-      setIsModalLoading(true);
-      setIsInstagramScriptLoaded(false); 
-      setCurrentSlide(0); 
+      setIsInstagramScriptLoaded(false);
+      setCurrentSlide(0);
       setCurrentVideoSlide(0);
 
-      try {
-        const imgResponse = await databases.listDocuments(
-          APPWRITE_DATABASE_ID,
-          AFBEELDINGEN_COLLECTION_ID,
-          [Query.equal('Project', [element.$id])]
-        );
-        
-        if (imgResponse.documents.length > 0) {
-          const doc = imgResponse.documents[0];
-          const images = [];
-          for (let i = 1; i <= 8; i++) {
-            if (doc[`Afbeelding${i}`]) {
-              images.push(doc[`Afbeelding${i}`]);
-            }
-          }
-          setModalImages(images);
-        } else {
-          setModalImages([]);
-        }
-
-        const vidResponse = await databases.listDocuments(
-          APPWRITE_DATABASE_ID,
-          VIDEOS_COLLECTION_ID,
-          [Query.equal('Project', [element.$id])]
-        );
-
-        if (vidResponse.documents.length > 0) {
-          const doc = vidResponse.documents[0];
-          const videos = [];
-          for (let i = 1; i <= 4; i++) {
-            if (doc[`Video${i}`]) {
-              videos.push({
-                url: convertToEmbedUrl(doc[`Video${i}`]), 
-                title: doc[`Titel${i}`] || '' 
-              });
-            }
-          }
-          setModalVideos(videos);
-        } else {
-          setModalVideos([]);
-        }
-
-      } catch (error) {
-        console.error("Failed to fetch modal details:", error);
-        setModalImages([]);
-        setModalVideos([]);
-      } finally {
-        setIsModalLoading(false);
-      }
+      setModalImages(element.afbeeldingen || []);
+      setModalVideos((element.videos || []).map(v => ({
+        url: convertToEmbedUrl(v.url),
+        title: v.title || ''
+      })));
+      setIsModalLoading(false);
     }
   };
 
@@ -506,9 +426,9 @@ export default function App() {
 
       <main className="min-h-screen relative w-screen overflow-hidden h-[300vh] md:h-[215vh]">
         
-        <img 
-          src="https://i.imgur.com/ViU9aYX.png" 
-          alt="Hoge lucht achtergrond met wolken" 
+        <img
+          src="/images/achtergrond-lucht.png"
+          alt="Hoge lucht achtergrond met wolken"
           className="absolute top-0 left-0 w-full h-full object-cover object-top -z-10" 
         />
         
@@ -529,13 +449,7 @@ export default function App() {
             <img key={cloud.id} src={cloud.src} alt="Decoratieve wolk op de achtergrond" className="absolute pointer-events-none max-w-none" style={{ top: cloud.top, left: cloud.left, right: cloud.right, width: cloud.width, zIndex: cloud.zIndex, opacity: cloud.opacity }} />
         ))}
 
-        {isLoading ? (
-            <div className="fixed inset-0 flex items-center justify-center z-10"><p className="text-white text-2xl">Loading elements...</p></div>
-        ) : (
-            <>
-                { !isArchiveOpen && renderElements(elements) }
-            </>
-        )}
+        { !isArchiveOpen && renderElements(elements) }
         
         {/* ... Rest of the modals (Element details, About, Archive) ... */}
         {/* --- Element Details Modal --- */}
@@ -687,9 +601,9 @@ export default function App() {
                     
                     <div className="flex flex-col md:flex-row gap-6 items-start">
                         <div className="w-full md:w-1/3 flex-shrink-0">
-                            <img 
-                                src="https://i.imgur.com/BzgiMi7.png" 
-                                alt="Stijn van Gorkum" 
+                            <img
+                                src="/images/stijn-van-gorkum.png"
+                                alt="Stijn van Gorkum"
                                 className="rounded-lg object-cover w-full h-auto" 
                             />
                         </div>
@@ -736,7 +650,7 @@ Zijn stijl wordt gekenmerkt door een combinatie van miniatuur en live-action. Hi
         )}
 
         <div className="group absolute bottom-0 left-0 w-full h-auto cursor-pointer archive-trigger" style={{ zIndex: 1 }} onClick={handleArchiveClick}>
-            <img src="https://i.imgur.com/hzR67ON.png" alt="Bergen van objecten die leiden naar het archief" className="w-full pointer-events-none" />
+            <img src="/images/archief-bergen.png" alt="Bergen van objecten die leiden naar het archief" className="w-full pointer-events-none" />
             <div className="archive-text absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 pointer-events-none">
                 <h2 className="text-white text-4xl font-bold" style={{ textShadow: '2px 2px 4px black' }}>ARCHIEF</h2>
             </div>

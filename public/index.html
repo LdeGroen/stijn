@@ -1,37 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
+
+    <!-- SEO -->
+    <title>Stijn van Gorkum - Regisseur & Miniatuurbouwer</title>
     <meta
       name="description"
-      content="De officiële website van Stijn van Gorkum"
+      content="Stijn van Gorkum is een Nederlandse filmregisseur en miniatuurbouwer. Portfolio van films, miniaturen en projecten, waaronder Een hond die huilt, Elmer, De witte hand, Picnic en King."
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
+    <link rel="canonical" href="https://www.stijnvangorkum.nl/" />
+
+    <!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Stijn van Gorkum" />
+    <meta property="og:locale" content="nl_NL" />
+    <meta property="og:title" content="Stijn van Gorkum - Regisseur & Miniatuurbouwer" />
+    <meta property="og:description" content="Stijn van Gorkum is een Nederlandse filmregisseur en miniatuurbouwer. Portfolio van films, miniaturen en projecten." />
+    <meta property="og:url" content="https://www.stijnvangorkum.nl/" />
+    <meta property="og:image" content="https://www.stijnvangorkum.nl/images/stijn-van-gorkum.png" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Stijn van Gorkum - Regisseur & Miniatuurbouwer" />
+    <meta name="twitter:description" content="Stijn van Gorkum is een Nederlandse filmregisseur en miniatuurbouwer. Portfolio van films, miniaturen en projecten." />
+    <meta name="twitter:image" content="https://www.stijnvangorkum.nl/images/stijn-van-gorkum.png" />
+
+    <!-- Structured data (Google) -->
+    <script id="schema-json-ld" type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Stijn van Gorkum",
+        "url": "https://www.stijnvangorkum.nl",
+        "jobTitle": "Filmregisseur",
+        "description": "Nederlandse filmregisseur en miniatuurbouwer, gespecialiseerd in de combinatie van miniatuur en live-action.",
+        "sameAs": ["https://www.instagram.com/_stijnvangorkum_/"],
+        "knowsAbout": ["Film", "Regie", "Miniatuurbouw", "Set Design"]
+      }
+    </script>
+
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logoStijn192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Chango&display=swap" rel="stylesheet">
-    <title>Stijn van Gorkum</title>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>
+      Stijn van Gorkum is een Nederlandse filmregisseur en miniatuurbouwer.
+      Zet JavaScript aan om deze website te bekijken, of neem contact op via
+      stijnvangorkum@gmail.com.
+    </noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
   </body>
 </html>
